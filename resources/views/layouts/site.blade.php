@@ -90,6 +90,24 @@
         nav a:hover::after {
             width: 100%;
         }
+
+        /* Login Button */
+        .login-btn {
+            background: #2d5016;
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 4px;
+            margin-left: 20px;
+        }
+
+        .login-btn::after {
+            display: none;
+        }
+
+        .login-btn:hover {
+            background: #1e3610;
+            color: white !important;
+        }
         
         main {
             min-height: 70vh;
@@ -350,6 +368,7 @@
                     <li><a href="/course">The Course</a></li>
                     <li><a href="/socials">Socials</a></li>
                     <li><a href="/contact">Contact</a></li>
+                    <li><a href="/login" class="login-btn">Login</a></li>
                 </ul>
             </nav>
         </div>
