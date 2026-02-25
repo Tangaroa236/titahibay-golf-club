@@ -46,14 +46,20 @@
                 Log In
             </button>
 
-            <!-- Forgot Password -->
-            @if (Route::has('password.request'))
-                <div style="text-align: center; margin-top: 24px;">
+            <!-- Links -->
+            <div style="margin-top: 24px; text-align: center; display: flex; justify-content: space-between; align-items: center;">
+                @if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}" style="color: #2d5f3f; text-decoration: none; font-size: 14px; font-weight: 500;">
-                        Forgot your password?
+                        Forgot password?
                     </a>
-                </div>
-            @endif
+                @endif
+                
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" style="color: #2d5f3f; text-decoration: none; font-size: 14px; font-weight: 500;">
+                        Create account
+                    </a>
+                @endif
+            </div>
         </form>
 
     </div>

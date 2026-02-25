@@ -2,11 +2,13 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Manage Posts
+                {{ in_array(Auth::user()->role, ['admin', 'board', 'administrator']) ? 'Manage Posts' : 'News Posts' }}
             </h2>
-            <a href="{{ route('admin.posts.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                Create New Post
-            </a>
+            @if(in_array(Auth::user()->role, ['admin', 'board', 'administrator']))
+                <a href="{{ route('admin.posts.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    Create New Post
+                </a>
+            @endif
         </div>
     </x-slot>
 
@@ -27,7 +29,9 @@
                                     <th class="px-6 py-3 text-left">Title</th>
                                     <th class="px-6 py-3 text-left">Status</th>
                                     <th class="px-6 py-3 text-left">Created</th>
-                                    <th class="px-6 py-3 text-left">Actions</th>
+                                    @if(in_array(Auth::user()->role, ['admin', 'board', 'administrator']))
+                                        <th class="px-6 py-3 text-left">Actions</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,14 +44,16 @@
                                             </span>
                                         </td>
                                         <td class="px-6 py-4">{{ $post->created_at->format('M d, Y') }}</td>
-                                        <td class="px-6 py-4">
-                                            <a href="{{ route('admin.posts.edit', $post) }}" class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
-                                            <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
-                                        </td>
+                                        @if(in_array(Auth::user()->role, ['admin', 'board', 'administrator']))
+                                            <td class="px-6 py-4">
+                                                <a href="{{ route('admin.posts.edit', $post) }}" class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
+                                                <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -56,7 +62,13 @@
                             {{ $posts->links() }}
                         </div>
                     @else
-                        <p class="text-gray-500 text-center py-8">No posts yet. Create your first post!</p>
+                        <p class="text-gray-500 text-center py-8">
+                            @if(in_array(Auth::user()->role, ['admin', 'board', 'administrator']))
+                                No posts yet. Create your first post!
+                            @else
+                                No posts available.
+                            @endif
+                        </p>
                     @endif
                 </div>
             </div>

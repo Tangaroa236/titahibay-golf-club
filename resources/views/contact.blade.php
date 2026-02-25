@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <!-- Map Section with Static Image -->
+    <!-- Map Section -->
     <div style="margin-top: 60px; margin-bottom: 40px;">
         <h3 style="text-align: center; color: #1a1a1a; font-size: 32px; margin-bottom: 40px;">Find Us</h3>
         
@@ -61,7 +61,7 @@
             <div style="position: relative; padding-bottom: 40%; height: 0; overflow: hidden;">
                 <iframe 
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.5!2d174.835!3d-41.094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d38add969c88889%3A0x500ef868479b8e0!2sTitahi%20Bay%20Golf%20Club!5e1!3m2!1sen!2snz!4v1738043500000!5m2!1sen!2snz" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.988447871234!2d174.83228631548395!3d-41.09363427929436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d38add969c88889%3A0x500ef868479b8e0!2sTitahi%20Bay%20Golf%20Club!5e0!3m2!1sen!2snz!4v1645678901234!5m2!1sen!2snz" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
@@ -69,7 +69,7 @@
             </div>
             <div style="padding: 24px; background: #f8f8f8; text-align: center;">
                 <p style="color: #4a4a4a; margin-bottom: 16px;">Gloaming Hill, Titahi Bay, Porirua 5022</p>
-                <a href="https://www.google.com/maps/place/Titahi+Bay+Golf+Club/@-41.094,174.835,15z" 
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Titahi+Bay+Golf+Club,Gloaming+Hill,Titahi+Bay,Porirua+5022" 
                    target="_blank" 
                    class="btn" 
                    style="margin-top: 0;">
