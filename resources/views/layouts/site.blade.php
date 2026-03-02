@@ -117,7 +117,7 @@
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
                         url('/images/TitahiBay.jpg');
-            background-position: center 40%;
+            background-position: center 50%;
             background-size: cover;
             background-attachment: fixed;
             color: white;
