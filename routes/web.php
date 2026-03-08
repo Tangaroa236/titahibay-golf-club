@@ -20,6 +20,10 @@ Route::get('/course', function () {
     return view('course');
 });
 
+Route::get('/green-fees', function () {
+    return view('green-fees');
+});
+
 Route::get('/socials', function () {
     return view('socials');
 });

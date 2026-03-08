@@ -366,6 +366,7 @@
                     <li><a href="/about">About</a></li>
                     <li><a href="/membership">Membership</a></li>
                     <li><a href="/course">The Course</a></li>
+                    <li><a href="/green-fees">Green Fees</a></li>
                     <li><a href="/socials">Socials</a></li>
                     <li><a href="/contact">Contact</a></li>
                     <li><a href="/login" class="login-btn">Login</a></li>
