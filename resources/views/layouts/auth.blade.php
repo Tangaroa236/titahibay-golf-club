@@ -49,7 +49,7 @@
                 <!-- Content Section -->
                 <div class="px-4 mb-2">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Content</p>
-                    
+
                     <a href="{{ route('admin.posts.index') }}" class="sidebar-link flex items-center px-4 py-3 rounded mb-1 {{ request()->routeIs('admin.posts.*') ? 'active' : 'text-gray-300' }}">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
@@ -83,10 +83,24 @@
                     </a>
                 </div>
 
+                <!-- Admin Only Section -->
+                @if(in_array(Auth::user()->role, ['admin']))
+                <div class="px-4 mb-2 mt-6">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Admin Tools</p>
+
+                    <a href="{{ route('admin.exports') }}" class="sidebar-link flex items-center px-4 py-3 rounded mb-1 {{ request()->routeIs('admin.exports') ? 'active' : 'text-gray-300' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Export Data
+                    </a>
+                </div>
+                @endif
+
                 <!-- Settings Section -->
                 <div class="px-4 mb-2 mt-6">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Settings</p>
-                    
+
                     <a href="{{ route('profile.edit') }}" class="sidebar-link flex items-center px-4 py-3 rounded mb-1 {{ request()->routeIs('profile.*') ? 'active' : 'text-gray-300' }}">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -104,7 +118,7 @@
                     </svg>
                     View Site
                 </a>
-                
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="flex items-center w-full px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded">
