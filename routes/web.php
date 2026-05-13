@@ -5,6 +5,7 @@ use App\Http\Controllers\MemberPostController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ExportController;
 use Illuminate\Support\Facades\Route;
 
 // Home page
@@ -51,6 +52,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
     Route::resource('posts', PostController::class);
+
+    // CSV Exports
+    Route::get('/exports', [ExportController::class, 'index'])->name('exports');
+    Route::get('/export/users', [ExportController::class, 'exportUsers'])->name('export.users');
+    Route::get('/export/golf-scores', [ExportController::class, 'exportGolfScores'])->name('export.golf-scores');
+    Route::get('/export/green-fees', [ExportController::class, 'exportGreenFees'])->name('export.green-fees');
 });
 
 // Auth routes (login, register, logout etc)
