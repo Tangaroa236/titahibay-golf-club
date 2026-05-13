@@ -2,59 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    // View any member's profile
+    public function show(User $user)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $posts = $user->posts()->with(['likes', 'comments.user'])->latest()->get();
+
+        return view('profile.show', compact('user', 'posts'));
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    // View your own edit profile page
+    public function edit()
     {
-        $request->user()->fill($request->validated());
+        return view('profile.edit', ['user' => auth()->user()]);
+    }
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+    // Save your profile changes
+    public function update(Request $request)
+    {
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'name'        => 'required|string|max:255',
+            'bio'         => 'nullable|string|max:1000',
+            'handicap'    => 'nullable|numeric|min:0|max:54',
+            'best_score'  => 'nullable|integer|min:1',
+            'games_played'=> 'nullable|integer|min:0',
+            'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Handle photo upload
+        if ($request->hasFile('profile_photo')) {
+            // Delete old photo if exists
+            if ($user->profile_photo) {
+                Storage::disk('public')->delete($user->profile_photo);
+            }
+            $validated['profile_photo'] = $request->file('profile_photo')->store('profile-photos', 'public');
         }
 
-        $request->user()->save();
+        $user->update($validated);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        return redirect()->route('profile.show', $user)->with('success', 'Profile updated!');
     }
 }

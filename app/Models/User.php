@@ -15,6 +15,11 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'profile_photo',
+        'bio',
+        'handicap',
+        'best_score',
+        'games_played',
     ];
 
     protected $hidden = [
@@ -30,6 +35,7 @@ class User extends Authenticatable
         ];
     }
 
+    // Role helpers
     public function hasRole(string $role): bool
     {
         return $this->role === $role;
@@ -40,8 +46,24 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function isMember(): bool
+    {
+        return $this->role === 'member';
+    }
+
+    // Profile relationships
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(MemberPost::class)->latest();
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(MemberPostLike::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(MemberPostComment::class);
     }
 }

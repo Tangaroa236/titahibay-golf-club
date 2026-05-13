@@ -1,53 +1,22 @@
-<?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MemberPostController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/membership', function () {
-    return view('membership');
-});
-
-Route::get('/course', function () {
-    return view('course');
-});
-
-Route::get('/green-fees', function () {
-    return view('green-fees');
-});
-
-Route::get('/socials', function () {
-    return view('socials');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
-
-// All authenticated users
+// Member profiles & social feed — logged in members only
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-// Admin-only routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('admin/users', \App\Http\Controllers\Admin\UserController::class)->names('admin.users');
-});
+    // Profile
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit/me', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/edit/me', [ProfileController::class, 'update'])->name('profile.update');
 
-// Admin, Board, Administrator can manage posts
-Route::middleware(['auth', 'role:admin,board,administrator'])->group(function () {
-    Route::resource('admin/posts', \App\Http\Controllers\Admin\PostController::class)->names('admin.posts');
-});
+    // Posts
+    Route::post('/member-posts', [MemberPostController::class, 'store'])->name('member-posts.store');
+    Route::delete('/member-posts/{memberPost}', [MemberPostController::class, 'destroy'])->name('member-posts.destroy');
 
-require __DIR__.'/auth.php';
+    // Likes
+    Route::post('/member-posts/{memberPost}/like', [MemberPostController::class, 'like'])->name('member-posts.like');
+
+    // Comments
+    Route::post('/member-posts/{memberPost}/comment', [MemberPostController::class, 'comment'])->name('member-posts.comment');
+    Route::delete('/member-post-comments/{memberPostComment}', [MemberPostController::class, 'destroyComment'])->name('member-post-comments.destroy');
+});
